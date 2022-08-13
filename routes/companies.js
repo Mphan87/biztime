@@ -6,14 +6,25 @@ const ExpressError = require("../expressError")
 const db = require("../db");
 
 
+// router.get('/', async (req, res, next) => {
+//     try {
+//       const results = await db.query(`SELECT * FROM companies;`);
+//       return res.json({ companies: results.rows })
+//     } catch (e) {
+//       return next(e);
+//     }
+//   })
+
+
 router.get('/', async (req, res, next) => {
     try {
-      const results = await db.query(`SELECT * FROM companies;`);
+      const results = await db.query(`SELECT c.code, c.name, c.description, i.industry FROM companies c JOIN industries i ON c.code = i.company_code;`);
       return res.json({ companies: results.rows })
     } catch (e) {
       return next(e);
     }
   })
+
 
 
   router.get('/:code', async (req, res, next) => {
